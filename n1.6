@@ -1,0 +1,45 @@
+let year = 5;
+let nyuuryoku = 300;
+let level = 1.2;
+
+let hairetu  = [];
+
+function keisan(){
+  let nennsyu = Math.floor(nyuuryoku * 1.2);
+  let gessyuu = Math.floor( nyuuryoku/12);
+  let bonus = Math.floor( nyuuryoku%12);
+  return[nennsyu,gessyuu,bonus];
+}
+
+function itinennme(){
+   let nen = nyuuryoku;
+   let ges = Math.floor(nyuuryoku/12);
+   let bon = Math.floor(nyuuryoku%12);
+   return[nen,ges,bon];
+}
+
+function nennsyuu(){
+  for(i = 1;i<=year;i++){
+    if(i === 1){
+      let [incomeA,monthlyA,bonusA] = itinennme();
+    //   nyuuryoku = incomeA;
+    hairetu.push({nen:incomeA,ges:monthlyA,bon:bonusA})
+    }else{
+    let [incomeA,monthlyA,bonusA] = keisan();
+    nyuuryoku = incomeA;
+    hairetu.push({nennsyuu:incomeA,gessyuu:monthlyA,bonus:bonusA})}
+  }
+  display(hairetu);
+}
+
+function display(a){
+  console.log(a);
+}
+
+nennsyuu();
+// function tasu(){
+//   for(i = 1,i <5;i++){
+    
+//   }
+// }
+  console.log("--------------")
