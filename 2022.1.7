@@ -1,0 +1,88 @@
+
+let year = 5;
+let hairetu  = [];
+let nyuuryoku = '';
+let lev ="";
+  let level ="";
+
+let message = () =>{
+  // 　テキストボックスに入力された値を持ってくる
+  let textbox = document.getElementById("text");
+  nyuuryoku = textbox.value;
+
+  let elems = document.getElementsByName("erabu");
+  
+  for(i=0;i<elems.length;i++){
+    if(elems[i].checked){
+      lev = parseInt(elems[i].value);
+      if(lev === 1){
+        level = 1.2;
+      } else if (lev === 2){
+        level = 1.4;
+      } else if (lev === 3){
+        level = 2;
+      }
+    }
+   }
+
+
+nennsyuu();
+
+display();
+
+}
+
+
+function nennsyuu(){
+  for(i = 1;i<=year;i++){
+    if(i === 1){
+      let [incomeA,monthlyA,bonusA] = itinennme();
+    hairetu.push({nennsyuu:incomeA,gessyuu:monthlyA,bonus:bonusA})
+    }else if(i%3 === 0){
+      let [incomeA,monthlyA,bonusA] = keisan();
+    nyuuryoku = incomeA;
+    hairetu.push({nennsyuu:incomeA +20,gessyuu:monthlyA,bonus:bonusA +20})
+     } else{
+    let [incomeA,monthlyA,bonusA] = keisan();
+    nyuuryoku = incomeA;
+    hairetu.push({nennsyuu:incomeA,gessyuu:monthlyA,bonus:bonusA})
+    }
+  }
+}
+
+
+function keisan(){
+  let nennsyu = Math.floor(nyuuryoku * level);
+  let gessyuu = Math.floor( nyuuryoku/12);
+  let bonus = Math.floor( nyuuryoku%12);
+  return[nennsyu,gessyuu,bonus];
+}
+
+function itinennme(){
+   let nen = Number(nyuuryoku);
+   let ges = Math.floor(nyuuryoku/12);
+   let bon = Math.floor(nyuuryoku%12);
+   return[nen,ges,bon];
+}
+
+//  見出し
+function display(){
+  let tablehead = ' ' ;
+  let head = ['年数','年収','月収','ボーナス'];
+    for(i = 0;i<4;i++){
+      tablehead += '<th>' + head[i] + '</th>';
+       }
+       let table = ' ';
+       for(let r = 0;r<hairetu.length;r++){
+       table += '<tr>';
+             table += '<td>' + (r + 1) +'年目' + '</td>'; 
+             table += '<td>' + hairetu[r].nennsyuu +'万' + '</td>'; 
+             table += '<td>' + hairetu[r].gessyuu +'万' + '</td>'; 
+             table += '<td>' +hairetu[r].bonus  +'万' + '</td>'; 
+            
+         table += '</tr>';
+       }
+    
+     document.write('<table border = "2">' + tablehead + table + '</table>');
+     
+      }
